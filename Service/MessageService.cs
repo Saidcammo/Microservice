@@ -44,6 +44,12 @@ public class MessageService : IHostedService
         channel.BasicPublish("delete-listing", string.Empty, null, message);
     }
 
+    public void SendLoggingActions(string action)
+    {
+        var message = Encoding.UTF8.GetBytes(action);
+        channel.BasicPublish("logging", string.Empty, null, message);
+    }
+
 
     // Anropas när programmet startas
     public Task StartAsync(CancellationToken cancellationToken)
@@ -59,10 +65,5 @@ public class MessageService : IHostedService
         channel.Close();
         connection.Close();
         return Task.CompletedTask;
-    }
-     public void SendLoggingActions(string action)
-    {
-        var message = Encoding.UTF8.GetBytes(action);
-        channel.BasicPublish("logging", string.Empty, null, message);
     }
 }
