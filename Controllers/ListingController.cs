@@ -40,7 +40,8 @@ namespace ListingService.Controllers
 
             _context.Listings.Add(listing);
             await _context.SaveChangesAsync();
-            messageService.NotifyListingCreation(listing1); 
+            messageService.NotifyListingCreation(listing1);
+            messageService.SendLoggingActions($"Ad: {listing.Title} Created by UserID: {listing.UserId}");
             return CreatedAtAction("PostListing", new { id = listing.Id }, listing);
         }
 
